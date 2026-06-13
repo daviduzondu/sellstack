@@ -39,7 +39,7 @@ import { Kysely } from 'kysely';
             },
             disableOriginCheck: configService.get('NODE_ENV') === 'development',
           },
-          plugins: [openAPI()],
+          plugins: [openAPI({ path: '' })],
           // trustedOrigins: [
           //   configService.get(''),
           //   configService.get('BACKEND_URL'),
