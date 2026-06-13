@@ -5,6 +5,9 @@
     "build": "turbo run build",
     "dev": "turbo run dev",
     "lint": "turbo run lint",
+    "nest": "pnpm --filter api exec nest g",
+    "migrate:make": "pnpm -F api exec kysely migrate:make",
+    "migrate:latest": "pnpm -F api exec kysely migrate:latest",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
     "check-types": "turbo run check-types"
   },
