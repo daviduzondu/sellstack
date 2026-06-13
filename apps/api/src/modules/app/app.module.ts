@@ -20,6 +20,7 @@ import { Kysely } from 'kysely';
         configService: ConfigService<z.infer<typeof envSchema>>,
       ) => ({
         auth: betterAuth({
+          baseURL: configService.get('BACKEND_URL'),
           user: { modelName: 'users' },
           verification: { modelName: 'verifications' },
           session: { modelName: 'sessions' },
@@ -38,7 +39,6 @@ import { Kysely } from 'kysely';
             },
             disableOriginCheck: configService.get('NODE_ENV') === 'development',
           },
-
           plugins: [openAPI()],
           // trustedOrigins: [
           //   configService.get(''),

@@ -5,5 +5,5 @@ export const envSchema = z.object({
   PORT: z.coerce.number().default(1711),
   DATABASE_URL: z.string().min(1),
   BETTER_AUTH_SECRET: z.string(),
-  BETTER_AUTH_URL: z.url(),
+  BACKEND_URL: z.url(),
 });
