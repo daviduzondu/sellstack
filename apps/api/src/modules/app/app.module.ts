@@ -7,11 +7,17 @@ import { AuthModule } from '@thallesp/nestjs-better-auth';
 import { betterAuth, z } from 'better-auth';
 import { openAPI } from 'better-auth/plugins';
 import { DbModule } from 'src/modules/db/db.module';
-import { KYSELY_INSTANCE } from 'src/constants';
+import { KYSELY_INSTANCE } from 'src/common/constants/token.constants';
 import { Kysely } from 'kysely';
+import { ProductModule } from 'src/modules/product/product.module';
+import { StoreModule } from 'src/modules/store/store.module';
+import { UserModule } from 'src/modules/user/user.module';
 
 @Module({
   imports: [
+    ProductModule,
+    StoreModule,
+    UserModule,
     AuthModule.forRootAsync({
       imports: [DbModule],
       inject: [KYSELY_INSTANCE, ConfigService],

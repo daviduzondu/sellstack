@@ -11,55 +11,45 @@ export async function up(db: Kysely<any>): Promise<void> {
   await executeWithTriggers({
     db,
     queries: [
-      baseTable(
-        db,
-        'users',
-        ['name', 'text', (col) => col.notNull()],
-        ['email', 'text', (col) => col.notNull().unique()],
-        ['emailVerified', 'boolean', (col) => col.notNull().defaultTo(false)],
-        ['image', 'text'],
-      ),
+      baseTable('users')
+        .addColumn('name', 'text', (col) => col.notNull())
+        .addColumn('email', 'text', (col) => col.notNull().unique())
+        .addColumn('emailVerified', 'boolean', (col) =>
+          col.notNull().defaultTo(false),
+        )
+        .addColumn('image', 'text')
+        .on(db),
 
-      baseTable(
-        db,
-        'sessions',
-        [
-          'userId',
-          'text',
-          (col) => col.notNull().references('users.id').onDelete('cascade'),
-        ],
-        ['token', 'text', (col) => col.notNull().unique()],
-        ['expiresAt', 'timestamptz', (col) => col.notNull()],
-        ['ipAddress', 'text'],
-        ['userAgent', 'text'],
-      ),
+      baseTable('sessions')
+        .addColumn('userId', 'text', (col) =>
+          col.notNull().references('users.id').onDelete('cascade'),
+        )
+        .addColumn('token', 'text', (col) => col.notNull().unique())
+        .addColumn('expiresAt', 'timestamptz', (col) => col.notNull())
+        .addColumn('ipAddress', 'text')
+        .addColumn('userAgent', 'text')
+        .on(db),
 
-      baseTable(
-        db,
-        'accounts',
-        [
-          'userId',
-          'text',
-          (col) => col.notNull().references('users.id').onDelete('cascade'),
-        ],
-        ['accountId', 'text', (col) => col.notNull()],
-        ['providerId', 'text', (col) => col.notNull()],
-        ['accessToken', 'text'],
-        ['refreshToken', 'text'],
-        ['accessTokenExpiresAt', 'timestamptz'],
-        ['refreshTokenExpiresAt', 'timestamptz'],
-        ['scope', 'text'],
-        ['idToken', 'text'],
-        ['password', 'text'],
-      ),
+      baseTable('accounts')
+        .addColumn('userId', 'text', (col) =>
+          col.notNull().references('users.id').onDelete('cascade'),
+        )
+        .addColumn('accountId', 'text', (col) => col.notNull())
+        .addColumn('providerId', 'text', (col) => col.notNull())
+        .addColumn('accessToken', 'text')
+        .addColumn('refreshToken', 'text')
+        .addColumn('accessTokenExpiresAt', 'timestamptz')
+        .addColumn('refreshTokenExpiresAt', 'timestamptz')
+        .addColumn('scope', 'text')
+        .addColumn('idToken', 'text')
+        .addColumn('password', 'text')
+        .on(db),
 
-      baseTable(
-        db,
-        'verifications',
-        ['identifier', 'text', (col) => col.notNull()],
-        ['value', 'text', (col) => col.notNull()],
-        ['expiresAt', 'timestamptz', (col) => col.notNull()],
-      ),
+      baseTable('verifications')
+        .addColumn('identifier', 'text', (col) => col.notNull())
+        .addColumn('value', 'text', (col) => col.notNull())
+        .addColumn('expiresAt', 'timestamptz', (col) => col.notNull())
+        .on(db),
     ],
     triggers: [setUpdatedAt],
   });

@@ -4,29 +4,37 @@ type Query = {
   execute: () => Promise<any>;
 };
 
-export function baseTable(
-  db: Kysely<any>,
-  tableName: string,
-  ...columns: Parameters<CreateTableBuilder<any>['addColumn']>[]
-) {
-  let runner = db.schema.createTable(tableName).addColumn('id', 'text', (col) =>
-    col
-      .notNull()
-      .primaryKey()
-      .defaultTo(sql`gen_random_uuid()`),
-  );
+export function baseTable(tableName: string) {
+  const columns: Parameters<CreateTableBuilder<any>['addColumn']>[] = [];
 
-  for (const column of columns) {
-    runner = runner.addColumn(...column);
-  }
+  return {
+    addColumn(...args: Parameters<CreateTableBuilder<any>['addColumn']>) {
+      columns.push(args);
+      return this;
+    },
+    on: (db: Kysely<any>) => {
+      let runner = db.schema
+        .createTable(tableName)
+        .addColumn('id', 'text', (col) =>
+          col
+            .notNull()
+            .primaryKey()
+            .defaultTo(sql`gen_random_uuid()`),
+        );
 
-  return runner
-    .addColumn('createdAt', 'timestamptz', (col) =>
-      col.notNull().defaultTo(sql`now()`),
-    )
-    .addColumn('updatedAt', 'timestamptz', (col) =>
-      col.notNull().defaultTo(sql`now()`),
-    );
+      for (const column of columns) {
+        runner = runner.addColumn(...column);
+      }
+
+      return runner
+        .addColumn('createdAt', 'timestamptz', (col) =>
+          col.notNull().defaultTo(sql`now()`),
+        )
+        .addColumn('updatedAt', 'timestamptz', (col) =>
+          col.notNull().defaultTo(sql`now()`),
+        );
+    },
+  };
 }
 
 export async function executeWithTriggers({
@@ -34,7 +42,7 @@ export async function executeWithTriggers({
   triggers,
   db,
 }: {
-  queries: Query[];
+  queries: [Query, ...Query[]];
   triggers: [RawBuilder<unknown>, ...RawBuilder<unknown>[]];
   db: Kysely<any>;
 }) {
