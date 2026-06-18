@@ -21,6 +21,7 @@ import { z } from 'zod';
               connectionString: configService.get('DATABASE_URL'),
             }),
           }),
+          log: ['query'],
         }),
     },
   ],
