@@ -5,12 +5,14 @@ import { UserService } from 'src/modules/user/user.service';
 import PG from 'pg';
 import { PG_UNIQUE_VIOLATION } from '@drdgvhbh/postgres-error-codes';
 import { NotFoundError } from 'src/common/errors/not-found.error';
-import { CreateStoreResponseDto } from 'src/modules/store/dto/response/create-store.response';
 import {
   STORE_ALREADY_EXISTS,
+  STORE_NOT_FOUND,
   USER_NOT_FOUND,
 } from 'src/common/constants/error-messages.constants';
-import { GetStoreResponseDto } from 'src/modules/store/dto/response/get-store.response';
+import { Productstatus } from 'src/modules/db/generated/types';
+import { ListProductsInStoreResponseSchema } from 'src/modules/store/dto/response.schema';
+import { ServiceResponse } from 'src/common/types/types.common';
 
 @Injectable()
 export class StoreService {
@@ -19,9 +21,7 @@ export class StoreService {
     private userService: UserService,
   ) {}
 
-  async getStoreInfoFromUserId(
-    userId: string,
-  ): Promise<GetStoreResponseDto | undefined> {
+  async getStoreInfoFromUserId(userId: string) {
     const store = await this.db
       .selectFrom('stores')
       .where('userId', '=', userId)
@@ -30,10 +30,16 @@ export class StoreService {
     return store;
   }
 
-  async createNewStore(
-    userId: string,
-    name: string,
-  ): Promise<CreateStoreResponseDto> {
+  async getStoreInfoFromStoreId(storeId: string) {
+    const store = await this.db
+      .selectFrom('stores')
+      .where('id', '=', storeId)
+      .select(['id', 'name', 'slug', 'description', 'userId as ownerId'])
+      .executeTakeFirst();
+    return store;
+  }
+
+  async createNewStore(userId: string, name: string) {
     const user = await this.userService.getUserById(userId);
     if (!user) throw new NotFoundError(USER_NOT_FOUND);
     const result = await this.db
@@ -60,6 +66,50 @@ export class StoreService {
     return {
       name: result.name,
       ownerId: result.ownerId,
+    };
+  }
+
+  async getStoreProducts(
+    storeId: string,
+    includeDrafts = false,
+  ): Promise<ServiceResponse<typeof ListProductsInStoreResponseSchema>> {
+    const store = await this.getStoreInfoFromStoreId(storeId);
+    if (!store) throw new NotFoundError(STORE_NOT_FOUND);
+
+    const result = await this.db
+      .selectFrom('products')
+      .where('storeId', '=', storeId)
+      .$if(includeDrafts, (qb) =>
+        qb.where((eb) =>
+          eb.or([
+            eb('status', '=', Productstatus.PUBLISHED),
+            eb('status', '=', Productstatus.DRAFT),
+          ]),
+        ),
+      )
+      .$if(!includeDrafts, (qb) =>
+        qb.where('status', '=', Productstatus.PUBLISHED),
+      )
+      .select([
+        'id',
+        'name',
+        'longDescription',
+        'shortDecription',
+        'currency',
+        'status',
+        'createdAt',
+        'updatedAt',
+        'userId',
+        'type',
+      ] satisfies (keyof ServiceResponse<
+        typeof ListProductsInStoreResponseSchema
+      >['products'][number])[])
+      .where('deletedAt', 'is', null)
+      .execute();
+
+    return {
+      storeId,
+      products: result,
     };
   }
 }

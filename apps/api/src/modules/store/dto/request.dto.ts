@@ -6,3 +6,8 @@ export class CreateStoreDto {
   @IsString()
   name: string;
 }
+
+export class ListStoreProductsRequestDto {
+  @IsString()
+  id: string;
+}
