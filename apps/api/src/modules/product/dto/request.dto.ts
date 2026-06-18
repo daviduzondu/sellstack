@@ -11,7 +11,6 @@ import {
   Currency,
   Products,
   Producttype,
-  ProductVariants,
 } from 'src/modules/db/generated/types';
 
 export class CreateNewProductRequestDto implements Omit<

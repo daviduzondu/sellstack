@@ -1,18 +1,15 @@
 import { Body, Controller, Get, Post } from '@nestjs/common';
-import { ApiOperation } from '@nestjs/swagger';
-import { Session } from '@thallesp/nestjs-better-auth';
+import { OptionalAuth, Session } from '@thallesp/nestjs-better-auth';
 import { Auth } from 'better-auth/types';
-import { CreateNewProductApiResponses } from 'src/modules/product/decorators/api-responses.decorators';
-import { CreateNewProductRequestDto } from 'src/modules/product/dto/request/create-product.request';
+import { CreateNewProductApiResponses } from 'src/modules/product/decorators/swagger.decorators';
+import { CreateNewProductRequestDto } from 'src/modules/product/dto/request.dto';
 import { ProductService } from 'src/modules/product/product.service';
 
 @Controller('product')
 export class ProductController {
   constructor(private productService: ProductService) {}
   @Get('/')
-  @ApiOperation({
-    description: 'Get all products',
-  })
+  @OptionalAuth()
   getProducts() {
     return {
       products: ['Milk'],

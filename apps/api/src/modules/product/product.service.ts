@@ -4,8 +4,7 @@ import { Db } from 'src/common/decorators/db';
 import { NotFoundError } from 'src/common/errors/not-found.error';
 import type { Database } from 'src/modules/db/db.types';
 import { Producttype } from 'src/modules/db/generated/types';
-import { CreateNewProductRequestDto } from 'src/modules/product/dto/request/create-product.request';
-import { CreateNewProductResponseDto } from 'src/modules/product/dto/response/create-product.response';
+import { CreateNewProductRequestDto } from 'src/modules/product/dto/request.dto';
 import { StoreService } from 'src/modules/store/store.service';
 
 @Injectable()
@@ -15,14 +14,9 @@ export class ProductService {
     private storeService: StoreService,
   ) {}
 
-  async createNewProduct(
-    payload: CreateNewProductRequestDto,
-    userId: string,
-  ): Promise<CreateNewProductResponseDto> {
+  async createNewProduct(payload: CreateNewProductRequestDto, userId: string) {
     const store = await this.storeService.getStoreInfoFromUserId(userId);
-    if (!store) {
-      throw new NotFoundError(STORE_NOT_FOUND);
-    }
+    if (!store) throw new NotFoundError(STORE_NOT_FOUND);
 
     const result = await this.db.transaction().execute(async (trx) => {
       const newProduct = await trx
