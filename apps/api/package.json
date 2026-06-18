@@ -27,6 +27,8 @@
     "@nestjs/platform-express": "^11.0.1",
     "@nestjs/swagger": "^11.4.4",
     "@scalar/nestjs-api-reference": "^1.2.3",
+    "@sinclair/typebox": "^0.34.49",
+    "@sinclair/typebox-codegen": "^0.11.1",
     "@thallesp/nestjs-better-auth": "^2.6.1",
     "better-auth": "^1.6.18",
     "class-transformer": "^0.5.1",
@@ -38,7 +40,6 @@
     "pg": "^8.21.0",
     "reflect-metadata": "^0.2.2",
     "rxjs": "^7.8.1",
-    "typebox": "^1.2.9",
     "zod": "^4.4.3"
   },
   "devDependencies": {

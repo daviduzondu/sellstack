@@ -1,5 +1,5 @@
 import { ConflictException } from '@nestjs/common';
-import Type from 'typebox';
+import { Type } from '@sinclair/typebox';
 
 export class ConflictError extends ConflictException {
   constructor(message: string) {

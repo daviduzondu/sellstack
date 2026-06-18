@@ -1,11 +1,11 @@
-import { defineConfig } from 'kysely-ctl';
+import { defineConfig, DefineConfigInput } from 'kysely-ctl';
 import { Pool } from 'pg';
 import path from 'path';
 import 'dotenv';
 
-export default defineConfig({
+export const config = {
   destroyOnExit: true,
-  dialect: 'pg',
+  dialect: 'postgres',
   migrations: {
     migrationFolder: path.join(
       process.cwd(),
@@ -20,4 +20,6 @@ export default defineConfig({
       connectionString: process.env.DATABASE_URL!,
     }),
   },
-});
+} as const;
+
+export default defineConfig(config as DefineConfigInput);

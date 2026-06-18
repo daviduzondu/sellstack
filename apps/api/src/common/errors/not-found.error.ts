@@ -1,5 +1,5 @@
 import { NotFoundException } from '@nestjs/common';
-import Type from 'typebox';
+import { Type } from '@sinclair/typebox';
 
 export class NotFoundError extends NotFoundException {
   constructor(message: string) {
@@ -7,6 +7,9 @@ export class NotFoundError extends NotFoundException {
   }
 
   static getSchema(message: string) {
-    return Type.Object({ message: Type.Literal(message) });
+    return Type.Object(
+      { message: Type.Literal(message) },
+      { description: message },
+    );
   }
 }
