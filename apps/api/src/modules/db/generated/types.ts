@@ -3,7 +3,7 @@
  * Please do not edit it manually.
  */
 
-import type { ColumnType } from 'kysely';
+import { ColumnType } from 'kysely';
 
 export enum Bookformat {
   DOCX = 'DOCX',
@@ -14,6 +14,11 @@ export enum Bookformat {
 export enum Currency {
   NGN = 'NGN',
   USD = 'USD',
+}
+
+export enum Pricingtype {
+  FIXED = 'FIXED',
+  FLEXIBLE = 'FLEXIBLE',
 }
 
 export enum Productstatus {
@@ -96,8 +101,10 @@ export interface ProductVariants {
   createdAt: Generated<Timestamp>;
   id: Generated<string>;
   isDefault: Generated<boolean>;
+  minPrice: Numeric | null;
   name: string;
   price: Numeric;
+  pricingType: Generated<Pricingtype>;
   productId: string;
   shortDescription: string;
   updatedAt: Generated<Timestamp>;
