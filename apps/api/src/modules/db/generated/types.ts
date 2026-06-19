@@ -3,41 +3,40 @@
  * Please do not edit it manually.
  */
 
-import { ColumnType } from 'kysely';
+import type { ColumnType } from "kysely";
 
 export enum Bookformat {
-  DOCX = 'DOCX',
-  EPUB = 'EPUB',
-  PDF = 'PDF',
+  DOCX = "DOCX",
+  EPUB = "EPUB",
+  PDF = "PDF",
 }
 
 export enum Currency {
-  NGN = 'NGN',
-  USD = 'USD',
+  NGN = "NGN",
+  USD = "USD",
 }
 
 export enum Pricingtype {
-  FIXED = 'FIXED',
-  FLEXIBLE = 'FLEXIBLE',
+  FIXED = "FIXED",
+  FLEXIBLE = "FLEXIBLE",
 }
 
 export enum Productstatus {
-  DRAFT = 'DRAFT',
-  PUBLISHED = 'PUBLISHED',
-  SUSPENDED = 'SUSPENDED',
+  DRAFT = "DRAFT",
+  PUBLISHED = "PUBLISHED",
+  SUSPENDED = "SUSPENDED",
 }
 
 export enum Producttype {
-  AUDIO = 'AUDIO',
-  EBOOK = 'EBOOK',
-  MEMBERSHIP = 'MEMBERSHIP',
-  OTHER = 'OTHER',
+  AUDIO = "AUDIO",
+  EBOOK = "EBOOK",
+  MEMBERSHIP = "MEMBERSHIP",
+  OTHER = "OTHER",
 }
 
-export type Generated<T> =
-  T extends ColumnType<infer S, infer I, infer U>
-    ? ColumnType<S, I | undefined, U>
-    : ColumnType<T, T | undefined, T>;
+export type Generated<T> = T extends ColumnType<infer S, infer I, infer U>
+  ? ColumnType<S, I | undefined, U>
+  : ColumnType<T, T | undefined, T>;
 
 export type Numeric = ColumnType<string, number | string, number | string>;
 
@@ -89,7 +88,7 @@ export interface Products {
   id: Generated<string>;
   longDescription: string | null;
   name: string;
-  shortDecription: string | null;
+  shortDescription: string | null;
   status: Generated<Productstatus>;
   storeId: string;
   type: Producttype;

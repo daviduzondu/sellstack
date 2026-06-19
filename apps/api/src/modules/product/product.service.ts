@@ -26,7 +26,7 @@ export class ProductService {
           userId,
           storeId: store.id,
           name: payload.name,
-          shortDecription: payload.shortDescription,
+          shortDescription: payload.shortDescription,
           longDescription: payload.longDescription,
         })
         .returning(['name', 'id'])

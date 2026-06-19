@@ -12,7 +12,10 @@ import {
 } from 'src/common/constants/error-messages.constants';
 import { Productstatus } from 'src/modules/db/generated/types';
 import { ListProductsInStoreResponseSchema } from 'src/modules/store/dto/response.schema';
-import { ServiceResponse } from 'src/common/types/types.common';
+import {
+  SelectFromResponseSchema,
+  ServiceResponse,
+} from 'src/common/types/types.common';
 
 @Injectable()
 export class StoreService {
@@ -94,16 +97,17 @@ export class StoreService {
         'id',
         'name',
         'longDescription',
-        'shortDecription',
+        'shortDescription',
         'currency',
         'status',
         'createdAt',
         'updatedAt',
         'userId',
         'type',
-      ] satisfies (keyof ServiceResponse<
-        typeof ListProductsInStoreResponseSchema
-      >['products'][number])[])
+      ] satisfies SelectFromResponseSchema<
+        typeof ListProductsInStoreResponseSchema,
+        'products'
+      >)
       .where('deletedAt', 'is', null)
       .execute();
 
