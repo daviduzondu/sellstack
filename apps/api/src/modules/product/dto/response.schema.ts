@@ -5,3 +5,7 @@ export const CreateNewProductResponseSchema = Type.Object({
   productId: Type.String({ format: 'uuid' }),
   variantId: Type.String({ format: 'uuid' }),
 });
+
+export const EditProductResponseSchema = Type.Object({
+  success: Type.Literal(true),
+});

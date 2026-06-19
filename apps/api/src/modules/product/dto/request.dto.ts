@@ -1,4 +1,4 @@
-import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
+import { ApiProperty, ApiPropertyOptional, OmitType } from '@nestjs/swagger';
 import {
   Equals,
   IsEnum,
@@ -54,3 +54,8 @@ export class CreateNewProductRequestDto implements Omit<
   @IsOptional()
   price: number;
 }
+
+export class EditProductRequestDto extends OmitType(
+  CreateNewProductRequestDto,
+  ['type'],
+) {}

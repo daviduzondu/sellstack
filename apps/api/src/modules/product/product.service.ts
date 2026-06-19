@@ -2,9 +2,14 @@ import { Injectable } from '@nestjs/common';
 import { STORE_NOT_FOUND } from 'src/common/constants/error-messages.constants';
 import { Db } from 'src/common/decorators/db';
 import { NotFoundError } from 'src/common/errors/not-found.error';
+import { ServiceResponse } from 'src/common/types/types.common';
 import type { Database } from 'src/modules/db/db.types';
 import { Producttype } from 'src/modules/db/generated/types';
-import { CreateNewProductRequestDto } from 'src/modules/product/dto/request.dto';
+import {
+  CreateNewProductRequestDto,
+  EditProductRequestDto,
+} from 'src/modules/product/dto/request.dto';
+import { EditProductResponseSchema } from 'src/modules/product/dto/response.schema';
 import { StoreService } from 'src/modules/store/store.service';
 
 @Injectable()
@@ -62,4 +67,26 @@ export class ProductService {
       variantId: result.newDefaultProductVariant.id,
     };
   }
+
+  async editProductInfo(
+    payload: EditProductRequestDto,
+    productId: string,
+  ): Promise<ServiceResponse<typeof EditProductResponseSchema>> {
+    await this.db
+      .updateTable('products')
+      .set({
+        ...payload,
+      })
+      .where('id', '=', productId)
+      .returning(['id'])
+      .executeTakeFirstOrThrow();
+
+    return {
+      success: true,
+    };
+  }
+
+  async publishProduct() {}
+
+  async unpublishProduct() {}
 }
