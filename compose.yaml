@@ -1,0 +1,17 @@
+name: sellstack
+
+services:
+  minio:
+    image: pgsty/minio:latest
+    container_name: minio
+    restart: unless-stopped
+    ports:
+      - "9000:9000" # S3 API
+      - "9001:9001" # Admin console
+    env_file:
+      - ./apps/api/.env
+    volumes:
+      - ./minio/data:/data
+    command: server /data --console-address ":9001"
+    profiles:
+      - container-s3

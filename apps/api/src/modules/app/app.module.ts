@@ -12,14 +12,16 @@ import { Kysely } from 'kysely';
 import { ProductModule } from 'src/modules/product/product.module';
 import { StoreModule } from 'src/modules/store/store.module';
 import { UserModule } from 'src/modules/user/user.module';
+import { StorageModule } from 'src/modules/storage/storage.module';
 
 @Module({
   imports: [
     ProductModule,
+    DbModule,
     StoreModule,
     UserModule,
+    StorageModule,
     AuthModule.forRootAsync({
-      imports: [DbModule],
       inject: [KYSELY_INSTANCE, ConfigService],
       useFactory: (
         db: Kysely<any>,

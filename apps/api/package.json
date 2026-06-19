@@ -20,6 +20,8 @@
     "test:e2e": "jest --config ./test/jest-e2e.json"
   },
   "dependencies": {
+    "@aws-sdk/client-s3": "^3.1071.0",
+    "@aws-sdk/s3-request-presigner": "^3.1071.0",
     "@drdgvhbh/postgres-error-codes": "^0.0.6",
     "@nestjs/common": "^11.0.1",
     "@nestjs/config": "^4.0.4",
@@ -30,6 +32,8 @@
     "@sinclair/typebox": "^0.34.49",
     "@sinclair/typebox-codegen": "^0.11.1",
     "@thallesp/nestjs-better-auth": "^2.6.1",
+    "@tus/s3-store": "^2.0.4",
+    "@tus/server": "^2.4.1",
     "better-auth": "^1.6.18",
     "class-transformer": "^0.5.1",
     "class-validator": "^0.15.1",
