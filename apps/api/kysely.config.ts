@@ -5,7 +5,7 @@ import 'dotenv';
 
 export const config = {
   destroyOnExit: true,
-  dialect: 'postgres',
+  dialect: 'pg',
   migrations: {
     migrationFolder: path.join(
       process.cwd(),
