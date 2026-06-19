@@ -2,8 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { STORE_NOT_FOUND } from 'src/common/constants/error-messages.constants';
 import { Db } from 'src/common/decorators/db';
 import { NotFoundError } from 'src/common/errors/not-found.error';
-import { ServiceResponse } from 'src/common/types/types.common';
-import type { Database } from 'src/modules/db/db.types';
+import { type Database, ServiceResponse } from 'src/common/types/types.common';
 import { Producttype } from 'src/modules/db/generated/types';
 import {
   CreateNewProductRequestDto,

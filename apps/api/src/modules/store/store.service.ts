@@ -1,6 +1,5 @@
 import { ConflictException, Injectable } from '@nestjs/common';
 import { Db } from 'src/common/decorators/db';
-import type { Database } from 'src/modules/db/db.types';
 import { UserService } from 'src/modules/user/user.service';
 import PG from 'pg';
 import { PG_UNIQUE_VIOLATION } from '@drdgvhbh/postgres-error-codes';
@@ -13,6 +12,7 @@ import {
 import { Productstatus } from 'src/modules/db/generated/types';
 import { ListProductsInStoreResponseSchema } from 'src/modules/store/dto/response.schema';
 import {
+  type Database,
   SelectFromResponseSchema,
   ServiceResponse,
 } from 'src/common/types/types.common';

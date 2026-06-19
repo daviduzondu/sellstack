@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { Db } from 'src/common/decorators/db';
-import type { Database } from 'src/modules/db/db.types';
+import type { Database } from 'src/common/types/types.common';
 
 @Injectable()
 export class UserService {
