@@ -34,6 +34,27 @@ export class StorageService {
       namingFunction(_req, metadata) {
         return `${crypto.randomUUID()}${metadata ? '-' + metadata['filename'] : ''}`;
       },
+      //   async onUploadFinish(req, upload) {
+      //     const meta = upload.metadata as Record<string, string>;
+      //     await db
+      //       .insertInto('product_files')
+      //       .values({
+      //         fileName: meta['filename'],
+      //         fileSizeBytes: upload.size!,
+      //         s3_key: upload.id,
+      //         variantId: meta['productVariantId'],
+      //       })
+      //       .execute();
+
+      //     const stringBody = await new Response(req.body).text();
+      //     return new Promise((res) =>
+      //       res({
+      //         body: stringBody,
+      //         headers: Object.fromEntries(req.headers.entries()),
+      //         status_code: HttpStatus.INTERNAL_SERVER_ERROR,
+      //       }),
+      //     );
+      //   },
       onUploadCreate: async (_req, upload) => {
         const meta = upload.metadata as Record<string, string> | undefined;
         if (meta?.['filetype']) {
