@@ -78,7 +78,6 @@ export class StorageService {
       },
       onResponseError(_req, err) {
         if (err instanceof DatabaseError) {
-          console.log(err);
           throw new InternalServerError(INTERNAL_SERVER_ERROR);
         }
         throw new BadRequestError((err as Error).message ?? FAILED_TO_UPLOAD);
