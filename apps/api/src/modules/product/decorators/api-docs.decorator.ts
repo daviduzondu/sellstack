@@ -4,10 +4,10 @@ import { STORE_NOT_FOUND } from 'src/common/constants/error-messages.constants';
 import {
   CommonApiBadRequestResponse,
   CommonApiUnauthorizedResponse,
-} from 'src/common/decorators/api-responses';
+} from 'src/common/decorators/api-responses.decorator';
 import { NotFoundError } from 'src/common/errors/not-found.error';
-import { CreateNewProductResponseSchema } from 'src/modules/product/dto/response.schema';
-import { EditProductResponseSchema } from 'src/modules/product/dto/response.schema';
+import { CreateNewProductResponseSchema } from 'src/modules/product/schema/response.schema';
+import { EditProductResponseSchema } from 'src/modules/product/schema/response.schema';
 
 export const CreateNewProductApiResponses = () =>
   applyDecorators(

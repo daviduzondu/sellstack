@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { STORE_NOT_FOUND } from 'src/common/constants/error-messages.constants';
-import { Db } from 'src/common/decorators/db';
+import { Db } from 'src/common/decorators/db.decorator';
 import { NotFoundError } from 'src/common/errors/not-found.error';
 import { type Database, ServiceResponse } from 'src/common/types/types.common';
 import { Producttype } from 'src/modules/db/generated/types';
@@ -8,7 +8,7 @@ import {
   CreateNewProductRequestDto,
   EditProductRequestDto,
 } from 'src/modules/product/dto/request.dto';
-import { EditProductResponseSchema } from 'src/modules/product/dto/response.schema';
+import { EditProductResponseSchema } from 'src/modules/product/schema/response.schema';
 import { StoreService } from 'src/modules/store/store.service';
 
 @Injectable()

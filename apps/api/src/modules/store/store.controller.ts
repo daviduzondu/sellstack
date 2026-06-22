@@ -5,7 +5,7 @@ import type { BetterAuthSession } from 'src/common/types/types.common';
 import {
   CreateStoreApiResponses,
   ListStoreProductsApiResponses,
-} from 'src/modules/store/decorators/swagger.decorators';
+} from 'src/modules/store/decorators/api-docs.decorator';
 import {
   CreateStoreDto,
   ListStoreProductsRequestDto,

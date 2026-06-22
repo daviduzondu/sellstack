@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { Db } from 'src/common/decorators/db';
+import { Db } from 'src/common/decorators/db.decorator';
 import type { Database } from 'src/common/types/types.common';
 
 @Injectable()

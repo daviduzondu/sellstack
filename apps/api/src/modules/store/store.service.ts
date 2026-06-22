@@ -1,5 +1,5 @@
 import { ConflictException, Injectable } from '@nestjs/common';
-import { Db } from 'src/common/decorators/db';
+import { Db } from 'src/common/decorators/db.decorator';
 import { UserService } from 'src/modules/user/user.service';
 import PG from 'pg';
 import { PG_UNIQUE_VIOLATION } from '@drdgvhbh/postgres-error-codes';
@@ -10,7 +10,7 @@ import {
   USER_NOT_FOUND,
 } from 'src/common/constants/error-messages.constants';
 import { Productstatus } from 'src/modules/db/generated/types';
-import { ListProductsInStoreResponseSchema } from 'src/modules/store/dto/response.schema';
+import { ListProductsInStoreResponseSchema } from 'src/modules/store/schema/response.schema';
 import {
   type Database,
   SelectFromResponseSchema,

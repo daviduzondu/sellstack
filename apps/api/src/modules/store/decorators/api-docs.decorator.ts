@@ -13,13 +13,13 @@ import {
 import {
   CommonApiBadRequestResponse,
   CommonApiUnauthorizedResponse,
-} from 'src/common/decorators/api-responses';
+} from 'src/common/decorators/api-responses.decorator';
 import { ConflictError } from 'src/common/errors/conflict.error';
 import { NotFoundError } from 'src/common/errors/not-found.error';
 import {
   CreateStoreResponseSchema,
   ListProductsInStoreResponseSchema,
-} from 'src/modules/store/dto/response.schema';
+} from 'src/modules/store/schema/response.schema';
 
 export const CreateStoreApiResponses = () =>
   applyDecorators(

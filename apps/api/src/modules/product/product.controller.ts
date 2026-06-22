@@ -11,7 +11,7 @@ import { Auth } from 'better-auth/types';
 import {
   CreateNewProductApiResponses,
   EditProductApiResponses,
-} from 'src/modules/product/decorators/swagger.decorators';
+} from 'src/modules/product/decorators/api-docs.decorator';
 import {
   CreateNewProductRequestDto,
   EditProductRequestDto,
