@@ -41,8 +41,8 @@ export class StorageService {
     private jwtService: JwtService,
   ) {
     const credentials = {
-      accessKeyId: this.configService.getOrThrow('ACCESS_KEY'),
-      secretAccessKey: this.configService.getOrThrow('SECRET_KEY'),
+      accessKeyId: this.configService.getOrThrow<string>('ACCESS_KEY'),
+      secretAccessKey: this.configService.getOrThrow<string>('SECRET_KEY'),
     };
     this.s3client = new S3Client({
       region: configService.getOrThrow('AWS_REGION'),
@@ -123,7 +123,7 @@ export class StorageService {
 
         return {};
       },
-      onUploadCreate: async (req, upload) => {
+      onUploadCreate: (req, upload) => {
         const meta = upload.metadata as TusMetadata | undefined;
 
         let decodedUploadToken: UploadTokenJWTPayload | undefined;
@@ -151,7 +151,7 @@ export class StorageService {
           }
         }
 
-        return { metadata: upload.metadata };
+        return new Promise((res) => res({ metadata: upload.metadata }));
       },
     });
   }
@@ -161,7 +161,6 @@ export class StorageService {
     userId: string,
   ): Promise<ServiceResponse<typeof GenerateUploadKeyResponseSchema>> {
     const payload = {} as UploadTokenJWTPayload;
-
     const variant = await (async () =>
       dto.uploadType === UploadType.PRODUCT
         ? await this.db
