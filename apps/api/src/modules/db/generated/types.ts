@@ -75,6 +75,7 @@ export interface ProductFiles {
   fileName: string;
   fileSizeBytes: number;
   id: Generated<string>;
+  mimeType: string;
   s3_key: string;
   updatedAt: Generated<Timestamp>;
   variantId: string;

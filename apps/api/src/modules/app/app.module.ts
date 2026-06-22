@@ -13,6 +13,8 @@ import { ProductModule } from 'src/modules/product/product.module';
 import { StoreModule } from 'src/modules/store/store.module';
 import { UserModule } from 'src/modules/user/user.module';
 import { StorageModule } from 'src/modules/storage/storage.module';
+import { JwtModule } from '@nestjs/jwt';
+import { Env } from 'src/common/types/types.common';
 
 @Module({
   imports: [
@@ -65,6 +67,18 @@ import { StorageModule } from 'src/modules/storage/storage.module';
         }
 
         return parsed.data;
+      },
+    }),
+    JwtModule.registerAsync({
+      inject: [ConfigService],
+      global: true,
+      useFactory(configService: ConfigService<Env>) {
+        return {
+          signOptions: {
+            expiresIn: '3m',
+          },
+          secret: configService.getOrThrow('JWT_SECRET'),
+        };
       },
     }),
   ],

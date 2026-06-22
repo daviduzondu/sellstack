@@ -107,6 +107,7 @@ createdAt: Type.Date(),
 fileName: Type.String(),
 fileSizeBytes: Type.Number(),
 id: Type.String(),
+mimeType: Type.String(),
 s3_key: Type.String(),
 updatedAt: Type.Date(),
 variantId: Type.String()

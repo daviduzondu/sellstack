@@ -13,4 +13,5 @@ export const envSchema = z.object({
   SECRET_KEY: z.string(),
   S3_BUCKET: z.string(),
   AWS_REGION: z.string(),
+  JWT_SECRET: z.string(),
 });
