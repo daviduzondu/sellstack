@@ -12,7 +12,7 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql;
 
-CREATE TRIGGER block_product_type_update
+CREATE OR REPLACE TRIGGER block_product_type_update
 BEFORE UPDATE OF type ON products
 FOR EACH ROW
 EXECUTE FUNCTION prevent_product_type_update();
