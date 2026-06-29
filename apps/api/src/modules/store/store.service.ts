@@ -33,6 +33,19 @@ export class StoreService {
     return store;
   }
 
+  async getStoreInfoFromProductVariant(variantId: string) {
+    return await this.db
+      .selectFrom('products')
+      .innerJoin(
+        'product_variants',
+        'product_variants.productId',
+        'products.id',
+      )
+      .where('product_variants.id', '=', variantId)
+      .select('products.storeId as id')
+      .executeTakeFirst();
+  }
+
   async getStoreInfoFromStoreId(storeId: string) {
     const store = await this.db
       .selectFrom('stores')
