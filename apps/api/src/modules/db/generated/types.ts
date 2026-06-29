@@ -47,8 +47,6 @@ export type Generated<T> = T extends ColumnType<infer S, infer I, infer U>
 
 export type Int8 = ColumnType<string, bigint | number | string, bigint | number | string>;
 
-export type Numeric = ColumnType<string, number | string, number | string>;
-
 export type Timestamp = ColumnType<Date, Date | string, Date | string>;
 
 export interface Accounts {
@@ -157,9 +155,9 @@ export interface ProductVariants {
   createdAt: Generated<Timestamp>;
   id: Generated<string>;
   isDefault: Generated<boolean>;
-  minPrice: Numeric | null;
+  minPrice: Int8 | null;
   name: string;
-  price: Numeric;
+  price: Int8;
   pricingType: Generated<Pricingtype>;
   productId: string;
   shortDescription: string;

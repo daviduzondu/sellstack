@@ -233,11 +233,11 @@ createdAt: Type.Date(),
 id: Type.String(),
 isDefault: Type.Boolean(),
 minPrice: Type.Union([
-Type.String(),
+Int8,
 Type.Null()
 ]),
 name: Type.String(),
-price: Type.String(),
+price: Int8,
 pricingType: Pricingtype,
 productId: Type.String(),
 shortDescription: Type.String(),
