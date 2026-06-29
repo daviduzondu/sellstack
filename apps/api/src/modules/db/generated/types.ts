@@ -16,6 +16,13 @@ export enum Currency {
   USD = "USD",
 }
 
+export enum Orderstatus {
+  FAILED = "FAILED",
+  PAID = "PAID",
+  PENDING = "PENDING",
+  REFUNDED = "REFUNDED",
+}
+
 export enum Pricingtype {
   FIXED = "FIXED",
   FLEXIBLE = "FLEXIBLE",
@@ -38,6 +45,8 @@ export type Generated<T> = T extends ColumnType<infer S, infer I, infer U>
   ? ColumnType<S, I | undefined, U>
   : ColumnType<T, T | undefined, T>;
 
+export type Int8 = ColumnType<string, bigint | number | string, bigint | number | string>;
+
 export type Numeric = ColumnType<string, number | string, number | string>;
 
 export type Timestamp = ColumnType<Date, Date | string, Date | string>;
@@ -58,6 +67,25 @@ export interface Accounts {
   userId: string;
 }
 
+export interface CartItems {
+  cartId: string;
+  createdAt: Generated<Timestamp>;
+  id: Generated<string>;
+  quantity: Generated<number>;
+  unitPrice: Int8;
+  updatedAt: Generated<Timestamp>;
+  variantId: string;
+}
+
+export interface Carts {
+  checkedOutAt: Timestamp | null;
+  createdAt: Generated<Timestamp>;
+  id: Generated<string>;
+  storeId: string;
+  updatedAt: Generated<Timestamp>;
+  userId: string;
+}
+
 export interface Ebooks {
   createdAt: Generated<Timestamp>;
   edition: string | null;
@@ -68,6 +96,35 @@ export interface Ebooks {
   publishedAt: Timestamp | null;
   updatedAt: Generated<Timestamp>;
   variantId: string;
+}
+
+export interface OrderItems {
+  createdAt: Generated<Timestamp>;
+  currency: Currency;
+  id: Generated<string>;
+  longDescription: string;
+  name: string | null;
+  orderId: string;
+  platformFee: Int8;
+  quantity: Generated<number>;
+  s3_key: string | null;
+  shortDescription: string;
+  total: Int8;
+  type: Producttype;
+  unitPrice: Int8;
+  updatedAt: Generated<Timestamp>;
+  variantId: string | null;
+}
+
+export interface Orders {
+  buyerId: string;
+  cartId: string | null;
+  createdAt: Generated<Timestamp>;
+  id: Generated<string>;
+  paidAt: Timestamp | null;
+  reference: string;
+  status: Generated<Orderstatus>;
+  updatedAt: Generated<Timestamp>;
 }
 
 export interface ProductFiles {
@@ -152,7 +209,11 @@ export interface Verifications {
 
 export interface DB {
   accounts: Accounts;
+  cart_items: CartItems;
+  carts: Carts;
   ebooks: Ebooks;
+  order_items: OrderItems;
+  orders: Orders;
   product_files: ProductFiles;
   product_variants: ProductVariants;
   products: Products;

@@ -14,6 +14,25 @@ Type.Literal("NGN"),
 Type.Literal("USD")
 ])
 
+export type Int8 = Static<typeof Int8>
+export const Int8 = ColumnType(Type.String(), Type.Union([
+Type.BigInt(),
+Type.Number(),
+Type.String()
+]), Type.Union([
+Type.BigInt(),
+Type.Number(),
+Type.String()
+]))
+
+export type Orderstatus = Static<typeof Orderstatus>
+export const Orderstatus = Type.Union([
+Type.Literal("FAILED"),
+Type.Literal("PAID"),
+Type.Literal("PENDING"),
+Type.Literal("REFUNDED")
+])
+
 export type Pricingtype = Static<typeof Pricingtype>
 export const Pricingtype = Type.Union([
 Type.Literal("FIXED"),
@@ -73,6 +92,30 @@ updatedAt: Type.Date(),
 userId: Type.String()
 })
 
+export type CartItems = Static<typeof CartItems>
+export const CartItems = Type.Object({
+cartId: Type.String(),
+createdAt: Type.Date(),
+id: Type.String(),
+quantity: Type.Number(),
+unitPrice: Int8,
+updatedAt: Type.Date(),
+variantId: Type.String()
+})
+
+export type Carts = Static<typeof Carts>
+export const Carts = Type.Object({
+checkedOutAt: Type.Union([
+Type.Date(),
+Type.Null()
+]),
+createdAt: Type.Date(),
+id: Type.String(),
+storeId: Type.String(),
+updatedAt: Type.Date(),
+userId: Type.String()
+})
+
 export type Ebooks = Static<typeof Ebooks>
 export const Ebooks = Type.Object({
 createdAt: Type.Date(),
@@ -99,6 +142,52 @@ Type.Null()
 ]),
 updatedAt: Type.Date(),
 variantId: Type.String()
+})
+
+export type OrderItems = Static<typeof OrderItems>
+export const OrderItems = Type.Object({
+createdAt: Type.Date(),
+currency: Currency,
+id: Type.String(),
+longDescription: Type.String(),
+name: Type.Union([
+Type.String(),
+Type.Null()
+]),
+orderId: Type.String(),
+platformFee: Int8,
+quantity: Type.Number(),
+s3_key: Type.Union([
+Type.String(),
+Type.Null()
+]),
+shortDescription: Type.String(),
+total: Int8,
+type: Producttype,
+unitPrice: Int8,
+updatedAt: Type.Date(),
+variantId: Type.Union([
+Type.String(),
+Type.Null()
+])
+})
+
+export type Orders = Static<typeof Orders>
+export const Orders = Type.Object({
+buyerId: Type.String(),
+cartId: Type.Union([
+Type.String(),
+Type.Null()
+]),
+createdAt: Type.Date(),
+id: Type.String(),
+paidAt: Type.Union([
+Type.Date(),
+Type.Null()
+]),
+reference: Type.String(),
+status: Orderstatus,
+updatedAt: Type.Date()
 })
 
 export type ProductFiles = Static<typeof ProductFiles>
@@ -218,7 +307,11 @@ value: Type.String()
 export type DB = Static<typeof DB>
 export const DB = Type.Object({
 accounts: Accounts,
+cart_items: CartItems,
+carts: Carts,
 ebooks: Ebooks,
+order_items: OrderItems,
+orders: Orders,
 product_files: ProductFiles,
 product_variants: ProductVariants,
 products: Products,
