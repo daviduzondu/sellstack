@@ -6,3 +6,4 @@ export const PRODUCT_OR_VARIANT_NOT_FOUND =
 export const INVALID_UPLOAD_TOKEN = 'Invalid upload token';
 export const FAILED_TO_UPLOAD = 'Failed to upload file';
 export const INTERNAL_SERVER_ERROR = 'Internal server error';
+export const PRODUCT_ALREADY_EXISTS_IN_CART = 'Product already exists in cart';
