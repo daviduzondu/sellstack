@@ -67,6 +67,13 @@ export class ProductService {
     };
   }
 
+  async getVariantInfo(variantId: string) {
+    return await this.db
+      .selectFrom('product_variants')
+      .where('id', '=', variantId)
+      .select(['id', 'minPrice', 'price', 'pricingType', 'name', 'productId'])
+      .executeTakeFirst();
+  }
   async editProductInfo(
     payload: EditProductRequestDto,
     productId: string,
