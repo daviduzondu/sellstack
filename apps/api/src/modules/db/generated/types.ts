@@ -68,6 +68,7 @@ export interface Accounts {
 export interface CartItems {
   cartId: string;
   createdAt: Generated<Timestamp>;
+  currency: Currency;
   id: Generated<string>;
   quantity: Generated<number>;
   unitPrice: Int8;

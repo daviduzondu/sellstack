@@ -14,17 +14,6 @@ Type.Literal("NGN"),
 Type.Literal("USD")
 ])
 
-export type Int8 = Static<typeof Int8>
-export const Int8 = ColumnType(Type.String(), Type.Union([
-Type.BigInt(),
-Type.Number(),
-Type.String()
-]), Type.Union([
-Type.BigInt(),
-Type.Number(),
-Type.String()
-]))
-
 export type Orderstatus = Static<typeof Orderstatus>
 export const Orderstatus = Type.Union([
 Type.Literal("FAILED"),
@@ -96,9 +85,10 @@ export type CartItems = Static<typeof CartItems>
 export const CartItems = Type.Object({
 cartId: Type.String(),
 createdAt: Type.Date(),
+currency: Currency,
 id: Type.String(),
 quantity: Type.Number(),
-unitPrice: Int8,
+unitPrice: Type.String(),
 updatedAt: Type.Date(),
 variantId: Type.String()
 })
@@ -155,16 +145,16 @@ Type.String(),
 Type.Null()
 ]),
 orderId: Type.String(),
-platformFee: Int8,
+platformFee: Type.String(),
 quantity: Type.Number(),
 s3_key: Type.Union([
 Type.String(),
 Type.Null()
 ]),
 shortDescription: Type.String(),
-total: Int8,
+total: Type.String(),
 type: Producttype,
-unitPrice: Int8,
+unitPrice: Type.String(),
 updatedAt: Type.Date(),
 variantId: Type.Union([
 Type.String(),
@@ -233,11 +223,11 @@ createdAt: Type.Date(),
 id: Type.String(),
 isDefault: Type.Boolean(),
 minPrice: Type.Union([
-Int8,
+Type.String(),
 Type.Null()
 ]),
 name: Type.String(),
-price: Int8,
+price: Type.String(),
 pricingType: Pricingtype,
 productId: Type.String(),
 shortDescription: Type.String(),
