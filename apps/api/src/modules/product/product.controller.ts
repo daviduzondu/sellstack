@@ -6,7 +6,9 @@ import {
   ParseUUIDPipe,
   Post,
 } from '@nestjs/common';
+import { ApiOkResponse, ApiOperation } from '@nestjs/swagger';
 import { OptionalAuth, Session } from '@thallesp/nestjs-better-auth';
+import { Type } from '@sinclair/typebox';
 import { Auth } from 'better-auth/types';
 import {
   CreateNewProductApiResponses,
@@ -23,6 +25,10 @@ export class ProductController {
   constructor(private productService: ProductService) {}
   @Get('/')
   @OptionalAuth()
+  @ApiOperation({ description: 'List all products' })
+  @ApiOkResponse({
+    schema: Type.Object({ products: Type.Array(Type.String()) }),
+  })
   getProducts() {
     return {
       products: ['Milk'],
