@@ -15,11 +15,13 @@ import { UserModule } from 'src/modules/user/user.module';
 import { StorageModule } from 'src/modules/storage/storage.module';
 import { JwtModule } from '@nestjs/jwt';
 import { Env } from 'src/common/types/types.common';
+import { CartModule } from 'src/modules/cart/cart.module';
 
 @Module({
   imports: [
     ProductModule,
     DbModule,
+    CartModule,
     StoreModule,
     UserModule,
     StorageModule,
