@@ -1,21 +1,8 @@
 import { CreateTableBuilder, Kysely, RawBuilder, sql } from 'kysely';
-import { enforceOneStorePerCart } from 'src/utils/db/sql/enforce-one-store-per-cart';
-import { preventMultiCurrencyCart } from 'src/utils/db/sql/prevent-multi-currency-cart';
-import { preventProductCurrencyUpdate } from 'src/utils/db/sql/prevent-product-currency-update';
-import { preventProductTypeUpdate } from 'src/utils/db/sql/prevent-product-type-update';
-import { setUpdatedAt } from 'src/utils/db/sql/set-updated-at-trigger';
 
 type Query = {
   execute: () => Promise<any>;
 };
-
-export const triggers = [
-  setUpdatedAt,
-  enforceOneStorePerCart,
-  preventProductTypeUpdate,
-  preventProductCurrencyUpdate,
-  preventMultiCurrencyCart,
-] as const;
 
 export function baseTable(tableName: string) {
   const columns: Parameters<CreateTableBuilder<any>['addColumn']>[] = [];

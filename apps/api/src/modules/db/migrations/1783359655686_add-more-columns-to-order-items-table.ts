@@ -1,4 +1,4 @@
-import { sql, type Kysely } from 'kysely';
+import type { Kysely } from 'kysely';
 import { executeWithTriggers } from 'src/utils/db/misc';
 import { setUpdatedAt } from 'src/utils/db/sql/set-updated-at-trigger';
 
@@ -7,13 +7,20 @@ export async function up(db: Kysely<any>): Promise<void> {
   // up migration code goes here...
   // note: up migrations are mandatory. you must implement this function.
   // For more info, see: https://kysely.dev/docs/migrations
+
   await executeWithTriggers({
     db,
-    triggers: [setUpdatedAt],
     queries: [
       db.schema
-        .alterTable('cart_items')
-        .addColumn('currency', sql`"Currency"`, (col) => col.notNull()),
+        .alterTable('order_items')
+        .addColumn('sellerShare', 'bigint', (col) => col.notNull()),
+      db.schema
+        .alterTable('orders')
+        .addColumn('authorizationUrl', 'text', (col) => col.notNull().unique()),
+      db.schema
+        .alterTable('orders')
+        .addUniqueConstraint('unique_reference', ['reference']),
     ],
+    triggers: [setUpdatedAt],
   });
 }

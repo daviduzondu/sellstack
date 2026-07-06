@@ -1,5 +1,8 @@
 import { sql, type Kysely } from 'kysely';
-import { baseTable, executeWithTriggers, triggers } from 'src/utils/db/misc';
+import { baseTable, executeWithTriggers } from 'src/utils/db/misc';
+import { enforceOneStorePerCart } from 'src/utils/db/sql/enforce-one-store-per-cart';
+import { preventMultiCurrencyCart } from 'src/utils/db/sql/prevent-multi-currency-cart';
+import { setUpdatedAt } from 'src/utils/db/sql/set-updated-at-trigger';
 
 // `any` is required here since migrations should be frozen in time. alternatively, keep a "snapshot" db interface.
 export async function up(db: Kysely<any>): Promise<void> {
@@ -45,6 +48,6 @@ export async function up(db: Kysely<any>): Promise<void> {
         .on('cart_items')
         .column('cartId'),
     ],
-    triggers,
+    triggers: [setUpdatedAt, enforceOneStorePerCart, preventMultiCurrencyCart],
   });
 }

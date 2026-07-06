@@ -1,5 +1,6 @@
 import type { Kysely } from 'kysely';
-import { executeWithTriggers, triggers } from 'src/utils/db/misc';
+import { executeWithTriggers } from 'src/utils/db/misc';
+import { setUpdatedAt } from 'src/utils/db/sql/set-updated-at-trigger';
 
 // `any` is required here since migrations should be frozen in time. alternatively, keep a "snapshot" db interface.
 export async function up(db: Kysely<any>): Promise<void> {
@@ -14,6 +15,6 @@ export async function up(db: Kysely<any>): Promise<void> {
         .alterColumn('price', (col) => col.setDataType('bigint'))
         .alterColumn('minPrice', (col) => col.setDataType('bigint')),
     ],
-    triggers,
+    triggers: [setUpdatedAt],
   });
 }
