@@ -17,3 +17,12 @@ export const ListProductsInStoreResponseSchema = Type.Object({
     Type.Omit(TypeboxSchema.Products, ['deletedAt', 'storeId']),
   ),
 });
+
+export const AddSettlementAccountResponseSchema = Type.Intersect([
+  Type.Object({ success: Type.Literal(true) }),
+  Type.Pick(TypeboxSchema.StoreSettlementAccounts, [
+    'accountNumber',
+    'accountName',
+    'bank',
+  ]),
+]);
