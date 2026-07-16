@@ -23,6 +23,13 @@ export enum Orderstatus {
   REFUNDED = "REFUNDED",
 }
 
+export enum Ordertransactiontype {
+  CHARGEBACK = "CHARGEBACK",
+  DEBT_RECOVERY = "DEBT_RECOVERY",
+  REFUND = "REFUND",
+  SALE = "SALE",
+}
+
 export enum Pricingtype {
   FIXED = "FIXED",
   FLEXIBLE = "FLEXIBLE",
@@ -107,6 +114,7 @@ export interface OrderItems {
   platformFee: Int8;
   quantity: Generated<number>;
   s3_key: string | null;
+  sellerShare: Int8;
   shortDescription: string;
   total: Int8;
   type: Producttype;
@@ -116,6 +124,7 @@ export interface OrderItems {
 }
 
 export interface Orders {
+  authorizationUrl: string | null;
   buyerId: string;
   cartId: string | null;
   createdAt: Generated<Timestamp>;
@@ -123,6 +132,17 @@ export interface Orders {
   paidAt: Timestamp | null;
   reference: string;
   status: Generated<Orderstatus>;
+  updatedAt: Generated<Timestamp>;
+}
+
+export interface OrderTransactions {
+  amount: Int8;
+  createdAt: Generated<Timestamp>;
+  id: Generated<string>;
+  orderId: string;
+  reason: string;
+  reference: string;
+  type: Ordertransactiontype;
   updatedAt: Generated<Timestamp>;
 }
 
@@ -187,6 +207,20 @@ export interface Stores {
   userId: string;
 }
 
+export interface StoreSettlementAccounts {
+  accountName: string;
+  accountNumber: string;
+  bank: string;
+  createdAt: Generated<Timestamp>;
+  currency: Currency | null;
+  id: Generated<string>;
+  isVerified: Generated<boolean | null>;
+  paystackBankCode: string;
+  paystackSubAccountCode: string;
+  storeId: string;
+  updatedAt: Generated<Timestamp>;
+}
+
 export interface Users {
   createdAt: Generated<Timestamp>;
   email: string;
@@ -212,11 +246,13 @@ export interface DB {
   carts: Carts;
   ebooks: Ebooks;
   order_items: OrderItems;
+  order_transactions: OrderTransactions;
   orders: Orders;
   product_files: ProductFiles;
   product_variants: ProductVariants;
   products: Products;
   sessions: Sessions;
+  store_settlement_accounts: StoreSettlementAccounts;
   stores: Stores;
   users: Users;
   verifications: Verifications;

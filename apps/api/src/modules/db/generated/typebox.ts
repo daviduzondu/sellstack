@@ -22,6 +22,14 @@ Type.Literal("PENDING"),
 Type.Literal("REFUNDED")
 ])
 
+export type Ordertransactiontype = Static<typeof Ordertransactiontype>
+export const Ordertransactiontype = Type.Union([
+Type.Literal("CHARGEBACK"),
+Type.Literal("DEBT_RECOVERY"),
+Type.Literal("REFUND"),
+Type.Literal("SALE")
+])
+
 export type Pricingtype = Static<typeof Pricingtype>
 export const Pricingtype = Type.Union([
 Type.Literal("FIXED"),
@@ -151,6 +159,7 @@ s3_key: Type.Union([
 Type.String(),
 Type.Null()
 ]),
+sellerShare: Type.String(),
 shortDescription: Type.String(),
 total: Type.String(),
 type: Producttype,
@@ -164,6 +173,10 @@ Type.Null()
 
 export type Orders = Static<typeof Orders>
 export const Orders = Type.Object({
+authorizationUrl: Type.Union([
+Type.String(),
+Type.Null()
+]),
 buyerId: Type.String(),
 cartId: Type.Union([
 Type.String(),
@@ -177,6 +190,18 @@ Type.Null()
 ]),
 reference: Type.String(),
 status: Orderstatus,
+updatedAt: Type.Date()
+})
+
+export type OrderTransactions = Static<typeof OrderTransactions>
+export const OrderTransactions = Type.Object({
+amount: Type.String(),
+createdAt: Type.Date(),
+id: Type.String(),
+orderId: Type.String(),
+reason: Type.String(),
+reference: Type.String(),
+type: Ordertransactiontype,
 updatedAt: Type.Date()
 })
 
@@ -270,6 +295,27 @@ updatedAt: Type.Date(),
 userId: Type.String()
 })
 
+export type StoreSettlementAccounts = Static<typeof StoreSettlementAccounts>
+export const StoreSettlementAccounts = Type.Object({
+accountName: Type.String(),
+accountNumber: Type.String(),
+bank: Type.String(),
+createdAt: Type.Date(),
+currency: Type.Union([
+Currency,
+Type.Null()
+]),
+id: Type.String(),
+isVerified: Type.Union([
+Type.Boolean(),
+Type.Null()
+]),
+paystackBankCode: Type.String(),
+paystackSubAccountCode: Type.String(),
+storeId: Type.String(),
+updatedAt: Type.Date()
+})
+
 export type Users = Static<typeof Users>
 export const Users = Type.Object({
 createdAt: Type.Date(),
@@ -301,11 +347,13 @@ cart_items: CartItems,
 carts: Carts,
 ebooks: Ebooks,
 order_items: OrderItems,
+order_transactions: OrderTransactions,
 orders: Orders,
 product_files: ProductFiles,
 product_variants: ProductVariants,
 products: Products,
 sessions: Sessions,
+store_settlement_accounts: StoreSettlementAccounts,
 stores: Stores,
 users: Users,
 verifications: Verifications
