@@ -10,7 +10,7 @@ export class UserService {
     const user = await this.db
       .selectFrom('users')
       .where('id', '=', userId)
-      .select(['id', 'name'])
+      .select(['id', 'name', 'email'])
       .executeTakeFirst();
 
     return user;

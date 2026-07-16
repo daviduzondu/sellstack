@@ -1,5 +1,9 @@
 import { applyDecorators } from '@nestjs/common';
-import { ApiNotFoundResponse, ApiOkResponse, ApiOperation } from '@nestjs/swagger';
+import {
+  ApiNotFoundResponse,
+  ApiOkResponse,
+  ApiOperation,
+} from '@nestjs/swagger';
 import {
   CART_ITEM_NOT_FOUND,
   CART_NOT_FOUND,
@@ -20,7 +24,7 @@ import {
 export const AddToCartApiResponses = () =>
   applyDecorators(
     ApiOperation({ description: 'Add item to cart' }),
-    ApiOkResponse({ schema: AddToCartResponseSchema as any }),
+    ApiOkResponse({ schema: AddToCartResponseSchema as object }),
     CommonApiUnauthorizedResponse,
     CommonApiBadRequestResponse,
     ApiNotFoundResponse({
@@ -34,7 +38,7 @@ export const AddToCartApiResponses = () =>
 export const GetActiveCartApiResponses = () =>
   applyDecorators(
     ApiOperation({ description: 'Get active cart' }),
-    ApiOkResponse({ schema: GetActiveCartResponseSchema as any }),
+    ApiOkResponse({ schema: GetActiveCartResponseSchema as object }),
     CommonApiUnauthorizedResponse,
     ApiNotFoundResponse({
       schema: NotFoundError.getSchema(CART_NOT_FOUND),
@@ -44,7 +48,7 @@ export const GetActiveCartApiResponses = () =>
 export const RemoveCartItemApiResponses = () =>
   applyDecorators(
     ApiOperation({ description: 'Remove item from cart' }),
-    ApiOkResponse({ schema: RemoveCartItemResponseSchema as any }),
+    ApiOkResponse({ schema: RemoveCartItemResponseSchema as object }),
     CommonApiUnauthorizedResponse,
     CommonApiBadRequestResponse,
     ApiNotFoundResponse({

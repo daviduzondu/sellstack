@@ -1,4 +1,5 @@
 import { Injectable } from '@nestjs/common';
+import { sql } from 'kysely';
 import {
   CART_ITEM_NOT_FOUND,
   CART_NOT_FOUND,
@@ -29,18 +30,49 @@ export class CartService {
       .selectFrom('carts')
       .where('userId', '=', userId)
       .where('checkedOutAt', 'is', null)
-      .select(['storeId', 'userId', 'id'])
+      .select(['storeId', 'userId', 'id', 'updatedAt'])
       .executeTakeFirst();
 
     if (!cart) throw new NotFoundError(CART_NOT_FOUND);
 
     const items = await this.db
       .selectFrom('cart_items')
+      .innerJoin(
+        'product_variants',
+        'product_variants.id',
+        'cart_items.variantId',
+      )
+      .innerJoin('products', 'products.id', 'product_variants.productId')
       .where('cartId', '=', cart.id)
-      .select(['id', 'cartId', 'unitPrice', 'variantId', 'quantity'])
+      .select([
+        'products.storeId as storeId',
+        'cart_items.id as id',
+        'cartId',
+        'variantId',
+        'quantity',
+        'products.name as name',
+        'products.type as type',
+        'products.currency as currency',
+        'products.longDescription',
+        'products.shortDescription',
+        'product_variants.price as price',
+      ])
       .execute();
 
     return { cart, items };
+  }
+
+  async markActiveCartAsCompleted(userId: string) {
+    const activeCart = await this.getActiveCart(userId);
+    const result = await this.db
+      .updateTable('carts')
+      .set({
+        checkedOutAt: sql`now()`,
+      })
+      .where('carts.id', '=', activeCart.cart.id)
+      .returning(['carts.id'])
+      .executeTakeFirst();
+    if (result) return { success: true };
   }
 
   async addProductToCart({

@@ -25,6 +25,7 @@ export const GetActiveCartResponseSchema = Type.Object({
       'unitPrice',
       'variantId',
       'quantity',
+      'currency',
     ]),
   ),
 });
