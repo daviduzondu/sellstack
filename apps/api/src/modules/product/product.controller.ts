@@ -9,6 +9,7 @@ import {
 import { ApiOkResponse, ApiOperation } from '@nestjs/swagger';
 import { OptionalAuth, Session } from '@thallesp/nestjs-better-auth';
 import { Type } from '@sinclair/typebox';
+import * as TypeboxSchema from 'src/modules/db/generated/typebox';
 import { Auth } from 'better-auth/types';
 import {
   CreateNewProductApiResponses,
@@ -27,7 +28,11 @@ export class ProductController {
   @OptionalAuth()
   @ApiOperation({ description: 'List all products' })
   @ApiOkResponse({
-    schema: Type.Object({ products: Type.Array(Type.String()) }),
+    schema: Type.Object({
+      products: Type.Array(
+        Type.Omit(TypeboxSchema.Products, ['deletedAt', 'storeId']),
+      ),
+    }) as object,
   })
   getProducts() {
     return {
