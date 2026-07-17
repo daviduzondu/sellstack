@@ -15,16 +15,20 @@ import { UserModule } from 'src/modules/user/user.module';
 import { StorageModule } from 'src/modules/storage/storage.module';
 import { JwtModule } from '@nestjs/jwt';
 import { Env } from 'src/common/types/types.common';
-import { CartModule } from 'src/modules/cart/cart.module';
+import { OrdersModule } from 'src/modules/orders/orders.module';
+import { PaystackModule } from 'src/modules/paystack/paystack.module';
+import { LedgerModule } from 'src/modules/ledger/ledger.module';
 
 @Module({
   imports: [
     ProductModule,
     DbModule,
-    CartModule,
+    PaystackModule,
+    OrdersModule,
     StoreModule,
     UserModule,
     StorageModule,
+    LedgerModule,
     AuthModule.forRootAsync({
       inject: [KYSELY_INSTANCE, ConfigService],
       useFactory: (
