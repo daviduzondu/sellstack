@@ -9,7 +9,6 @@
     "migrate:make": "pnpm -F api exec kysely migrate:make",
     "typebox": "pnpm -F api exec ts-node -r tsconfig-paths/register src/modules/db/scripts/generate-typebox-schemas.ts --project tsconfig.json",
     "migrate:latest": "pnpm -F api exec kysely migrate:latest && pnpm codegen && pnpm typebox",
-    "paystack:openapi": "pnpm -F api exec pnpm paystack:openapi",
     "paystack": "pnpm -F api exec pnpm paystack",
     "codegen": "pnpm -F api exec kysely-codegen --runtime-enums=screaming-snake-case --dialect pg --out-file ./src/modules/db/generated/types.ts",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",

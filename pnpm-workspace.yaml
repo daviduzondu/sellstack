@@ -2,7 +2,6 @@ packages:
   - "apps/*"
   - "packages/*"
 allowBuilds:
-  '@openapitools/openapi-generator-cli': true
   '@scarf/scarf': false
   aws-sdk: true
   unrs-resolver: false
